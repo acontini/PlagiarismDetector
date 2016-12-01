@@ -5,8 +5,8 @@
 #include <vector>
 #include <tuple>
 #include <set>
-#include "LanguageModel.hpp"
-
+#include <cassert>
+#include "NgramCollection.hpp"
 
 enum Sensitivity { low = 4, medium = 3, high = 2, invalid = 0 };
 

@@ -5,7 +5,6 @@
 #include <fstream>
 #include <iostream>
 #include "NgramCollection.hpp"
-#include "LanguageModel.hpp"
 #include "PlagiarismDetector.hpp"
 
 /* Takes name of a file that contains paths to the documents. */

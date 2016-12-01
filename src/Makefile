@@ -34,8 +34,8 @@ all: $(BIN_DIR)/check_plagiarism $(BIN_DIR)/unitTest
 test: $(BIN_DIR)/unitTest
 	$(BIN_DIR)/unitTest
 
-$(BIN_DIR)/check_plagiarism: $(OBJ_DIR)/check_plagiarism.o $(OBJ_DIR)/NgramCollection.o $(OBJ_DIR)/LanguageModel.o $(OBJ_DIR)/PlagiarismDetector.o
-	$(GCC) $(CPPFLAGS) $(OBJ_DIR)/check_plagiarism.o $(OBJ_DIR)/NgramCollection.o $(OBJ_DIR)/LanguageModel.o $(OBJ_DIR)/PlagiarismDetector.o -o $(BIN_DIR)/check_plagiarism
+$(BIN_DIR)/check_plagiarism: $(OBJ_DIR)/check_plagiarism.o $(OBJ_DIR)/NgramCollection.o $(OBJ_DIR)/PlagiarismDetector.o
+	$(GCC) $(CPPFLAGS) $(OBJ_DIR)/check_plagiarism.o $(OBJ_DIR)/NgramCollection.o $(OBJ_DIR)/PlagiarismDetector.o -o $(BIN_DIR)/check_plagiarism
 
 $(BIN_DIR)/unitTest: $(OBJ_DIR)/unitTests-NgramCollection.o $(OBJ_DIR)/unitTestDriver.o $(OBJ_DIR)/NgramCollection.o
 	$(GCC) $(CPPFLAGS) $(OBJ_DIR)/unitTestDriver.o $(OBJ_DIR)/unitTests-NgramCollection.o $(OBJ_DIR)/NgramCollection.o -o $(BIN_DIR)/unitTest
@@ -52,10 +52,7 @@ $(OBJ_DIR)/unitTests-NgramCollection.o: unitTests-NgramCollection.cpp
 $(OBJ_DIR)/NgramCollection.o: NgramCollection.cpp $(INC_DIR)/NgramCollection.hpp 
 	$(GCC) $(CPPFLAGS) -c NgramCollection.cpp -o $(OBJ_DIR)/NgramCollection.o
 
-$(OBJ_DIR)/LanguageModel.o: LanguageModel.cpp $(INC_DIR)/LanguageModel.hpp $(INC_DIR)/NgramCollection.hpp
-	$(GCC) $(CPPFLAGS) -c LanguageModel.cpp -o $(OBJ_DIR)/LanguageModel.o
-
-$(OBJ_DIR)/PlagiarismDetector.o: PlagiarismDetector.cpp $(INC_DIR)/PlagiarismDetector.hpp $(INC_DIR)/LanguageModel.hpp $(INC_DIR)/NgramCollection.hpp
+$(OBJ_DIR)/PlagiarismDetector.o: PlagiarismDetector.cpp $(INC_DIR)/PlagiarismDetector.hpp $(INC_DIR)/NgramCollection.hpp
 	$(GCC) $(CPPFLAGS) -c PlagiarismDetector.cpp -o $(OBJ_DIR)/PlagiarismDetector.o
 
 
@@ -67,5 +64,5 @@ $(OBJ_DIR)/PlagiarismDetector.o: PlagiarismDetector.cpp $(INC_DIR)/PlagiarismDet
 
 # clean up generated files
 clean:
-	@echo removing generated files...
+	@echo Removing generated files...
 	@rm -f $(OBJ_DIR)/*.o 
