@@ -8,7 +8,7 @@
 #include "LanguageModel.hpp"
 
 
-enum Sensitivity { low, medium, high, invalid };
+enum Sensitivity { low = 4, medium = 3, high = 2, invalid = 0 };
 
 
 class NgramDocument {
@@ -16,7 +16,7 @@ class NgramDocument {
 public:
 
   /* Constructor: need to specify n. */
-  NgramDocument(int n) : ngrams(n) { assert(n > 1); }
+  NgramDocument(std::string fname, int n) : name(fname), ngrams(n) { assert(n > 1); }
 
   /* The name of the file. */
   std::string name;
@@ -32,12 +32,13 @@ class PlagiarismDetector {
 public:
 
   /* Constructor; need to specify sensitivity. */
-  PlagiarismDetector(Sensitivity s) : sen(s)  { }
+  PlagiarismDetector(Sensitivity s) : n((unsigned int)s)  { }
 
   /* Takes name of a file that contains paths to the documents. */
   void readFileList(std::string &fname);
 
-  /* Detects any documents listed in the file list that may be plagiarized, to the initialized sensitivity. */
+  /* Detects any documents listed in the file list that may be plagiarized, to the initialized sensitivity.
+   * Results stored in matches variable. */
   void detect();
 
   /* Returns a set of tuples with the possible detected matches. */
@@ -45,17 +46,20 @@ public:
 
 private:
 
-  /* The sensitivity to which the detector is calibrated. */
-  Sensitivity sen;
+  /* The n value corresponding to the sensitivity to which the detector is calibrated. */
+  unsigned int n;
 
   /* Read a list of paths from a file. */
   std::vector<std::string> readNames(std::string &listFile);
 
+  /* Add text from the given document file to the model. */
+  void addTextFromFile(std::string &fname);
+
   /* Add ngrams to the model from a vector of words. */
-  void buildNgrams(const std::vector<std::string> &text);
+  void buildNgramDoc(const std::string &fname, const std::vector<std::string> &text);
 
   /* Holds the ngram collection of each file. */
-  std::vector<NgramDocument> models;
+  std::vector<NgramDocument> documents;
 
   /* The set of possible matches. */
   std::set<std::tuple<std::string, std::string>> matches;
