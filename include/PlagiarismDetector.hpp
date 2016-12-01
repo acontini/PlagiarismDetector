@@ -1,3 +1,18 @@
+/*
+600.120.01 CS120 Intermediate Programming
+Final Project - Plagiarism Detector
+PlagiarismDetector.hpp - header for a plagiarism detector model
+12/1/2016
+
+Ryan Demo
+rdemo1
+rdemo1@jhu.edu
+
+Mengying Pan
+mpan4
+mpan4@jhu.edu
+*/
+
 #ifndef CS120_PLAGIARISM_DETECTOR_HPP
 #define CS120_PLAGIARISM_DETECTOR_HPP
 
@@ -8,9 +23,12 @@
 #include <cassert>
 #include "NgramCollection.hpp"
 
+
+/* Sensitivities corresponding to level of detection granularity. */
 enum Sensitivity { low = 4, medium = 3, high = 2, invalid = 0 };
 
 
+/* Simple class to hold a filename and its ngram collection. */
 class NgramDocument {
 
 public:
@@ -27,6 +45,7 @@ public:
 };
 
 
+/* Model that holds a collection of NgramDocuments and can perform plagiarism detection on them. */
 class PlagiarismDetector {
 
 public:
@@ -66,8 +85,10 @@ private:
 
 };
 
+
 /* Overloads << for a set of string tuples. */
 std::ostream& operator<<(std::ostream& out, const std::set<std::tuple<std::string, std::string>>& strTuples);
+
 
 #endif
 

@@ -1,4 +1,19 @@
 /*
+600.120.01 CS120 Intermediate Programming
+Final Project - Plagiarism Detector
+catch.hpp - catch unit testing header file
+12/1/2016
+
+Ryan Demo
+rdemo1
+rdemo1@jhu.edu
+
+Mengying Pan
+mpan4
+mpan4@jhu.edu
+*/
+
+/*
  *  Catch v1.5.8
  *  Generated: 2016-10-26 12:07:30.938259
  *  ----------------------------------------------------------

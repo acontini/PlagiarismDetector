@@ -1,3 +1,18 @@
+/*
+600.120.01 CS120 Intermediate Programming
+Final Project - Plagiarism Detector
+NgramCollection.hpp - header for an ngram collection
+12/1/2016
+
+Ryan Demo
+rdemo1
+rdemo1@jhu.edu
+
+Mengying Pan
+mpan4
+mpan4@jhu.edu
+*/
+
 #ifndef _CS120_NGRAM_COLLECTION_HPP
 #define _CS120_NGRAM_COLLECTION_HPP
 #include <vector>

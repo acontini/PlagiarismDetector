@@ -1,8 +1,16 @@
 ###################################################
-# Sample Makefile for HW8
-# Ben Mitchell
-# 2016-11-14
-#
+# 600.120.01 CS120 Intermediate Programming
+# Final Project - Plagiarism Detector
+# Makefile - Makefile for final project
+# 12/1/2016
+# 
+# Ryan Demo
+# rdemo1
+# rdemo1@jhu.edu
+# 
+# Mengying Pan
+# mpan4
+# mpan4@jhu.edu
 ###################################################
 
 ###############################
@@ -26,7 +34,7 @@ $(shell mkdir -p $(OBJ_DIR))
 $(shell mkdir -p $(BIN_DIR))
 
 ###############################
-# targets 
+# Targets 
 ###############################
 
 all: $(BIN_DIR)/check_plagiarism $(BIN_DIR)/unitTest
@@ -57,7 +65,7 @@ $(OBJ_DIR)/PlagiarismDetector.o: PlagiarismDetector.cpp $(INC_DIR)/PlagiarismDet
 
 
 ###############################
-# "utility" rules
+# "Utility" Rules
 ###############################
 # the .PHONY line says these targets aren't expected to generate files named after the target
 .PHONY: clean test

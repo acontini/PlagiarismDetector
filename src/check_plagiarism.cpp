@@ -1,3 +1,18 @@
+/*
+600.120.01 CS120 Intermediate Programming
+Final Project - Plagiarism Detector
+check_plagiarism.cpp - driver to detect plagiarism within documents listed in a file, with a sensitivity
+12/1/2016
+
+Ryan Demo
+rdemo1
+rdemo1@jhu.edu
+
+Mengying Pan
+mpan4
+mpan4@jhu.edu
+*/
+
 #include <iostream>
 #include <string>
 #include <tuple>

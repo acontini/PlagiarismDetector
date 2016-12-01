@@ -1,5 +1,58 @@
-CS120 Intermediate Programming
-Final Project - Plagiarism Detector
 
+600.120.01 CS120 Intermediate Programming
+Final Project - Plagiarism Detector
+12/1/2016
+
+Ryan Demo
+rdemo1
+rdemo1@jhu.edu
+
+Mengying Pan
+mpan4
+mpan4@jhu.edu
+
+Running ==============================================================================
+Compile from src/ with:
+$ make
+
+Run from src/ with:
+$ ../bin/check_plagiarism [file with list of document paths] [sensitivity]
+
+Arguments:
+- [file with list of document paths]	string:	name of file containing a list of document paths
+- [sensitivity]							char:	'h' for high, 'm' for medium, 'l' for low
+
+
+Testing ==============================================================================
+
+
+
+
+Plan of Attack =======================================================================
+
+
+
+
+Design ===============================================================================
+
+
+
+
+Flags ================================================================================
+
+
+
+
+Timing ===============================================================================
+
+
+
+
+Challenges ===========================================================================
+
+
+
+
+Future ===============================================================================
 
 

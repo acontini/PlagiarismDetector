@@ -1,3 +1,17 @@
+/*
+600.120.01 CS120 Intermediate Programming
+Final Project - Plagiarism Detector
+PlagiarismDetector.cpp - implementation for a plagiarism detection model
+12/1/2016
+
+Ryan Demo
+rdemo1
+rdemo1@jhu.edu
+
+Mengying Pan
+mpan4
+mpan4@jhu.edu
+*/
 
 #include <string>
 #include <tuple>
