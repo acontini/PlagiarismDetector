@@ -114,9 +114,8 @@ void PlagiarismDetector :: detect() {
 }
 
 /* Check if another NgramDocument is suspect of plagiarizing the current NgramDocument. */
-bool NgramDocument :: isPlagiarismSuspect(NgramDocument &other) {
-  
-  return false;
+bool NgramDocument :: isPlagiarismSuspect(NgramDocument &other) { 
+  return intersectionCount(ngrams, other.ngrams) > 0.4 * ngrams.total;
 }
 
 /* Prints the possible matches detected. */
@@ -128,7 +127,7 @@ std::set<std::tuple<std::string, std::string>> PlagiarismDetector :: getPossible
 
   std::set<std::tuple<std::string, std::string>> matchesStringTuples;
 
-  for (auto match : matches) {
+  for (auto &match : matches) {
     std::string first = documents[std::get<0>(match)].name;
     std::string second = documents[std::get<1>(match)].name;
     matchesStringTuples.insert(std::make_tuple(first, second));
@@ -140,7 +139,7 @@ std::set<std::tuple<std::string, std::string>> PlagiarismDetector :: getPossible
 
 /* Overloads << for a set of string tuples. */
 std::ostream& operator<<(std::ostream& out, const std::set<std::tuple<std::string, std::string>>& strTuples) {
-  for (auto tup : strTuples) {
+  for (auto &tup : strTuples) {
     out << std::get<0>(tup) << ", " << std::get<1>(tup) << "\n";
   }
   return out;

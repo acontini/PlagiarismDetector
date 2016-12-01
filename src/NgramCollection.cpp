@@ -30,6 +30,12 @@ void NgramCollection :: increment(std::vector<std::string>::const_iterator begin
     words.push_back(*i);
   }
   counts[words][last] += 1; // increment the corresponding count
+  total += 1;
+}
+
+// Return the number of common ngrams between two NgramCollections.
+bool intersectionCount(NgramCollection &c1, NgramCollection &c2) {
+  return false;
 }
 
 /* toString method; calls one of three versions depending on the
