@@ -42,6 +42,9 @@ public:
   /* The ngrams model of the file. */
   NgramCollection ngrams;
 
+  /* Check if another NgramDocument is suspect of plagiarizing the current NgramDocument. */
+  bool isPlagiarismSuspect(NgramDocument &other);
+
 };
 
 
@@ -81,7 +84,7 @@ private:
   std::vector<NgramDocument> documents;
 
   /* The set of possible matches. */
-  std::set<std::tuple<std::string, std::string>> matches;
+  std::set<std::tuple<unsigned int, unsigned int>> matches;
 
 };
 

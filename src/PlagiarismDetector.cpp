@@ -92,16 +92,57 @@ void PlagiarismDetector :: buildNgramDoc(const std::string &fname, const std::ve
  * Results stored in matches variable. */
 void PlagiarismDetector :: detect() {
 
+  auto dStart = documents.begin();
+  auto dEnd = documents.end();
+  auto mEnd = matches.end();
+
+  for (auto iter1 = dStart; iter1 != dEnd; iter1++) {
+    for (auto iter2 = dStart; iter2 != dEnd; iter2++) {
+
+      unsigned int pos1 = iter1 - dStart;
+      unsigned int pos2 = iter2 - dStart;
+      std::tuple<unsigned int, unsigned int> pair = pos1 < pos2 ? std::make_tuple(pos1, pos2) : std::make_tuple(pos2, pos1);
+
+      if (pos1 != pos2 && matches.find(pair) == mEnd) {
+        if (iter1->isPlagiarismSuspect(*iter2)) {
+          matches.insert(pair);
+        }
+      }
+
+    }
+  }
+}
+
+/* Check if another NgramDocument is suspect of plagiarizing the current NgramDocument. */
+bool NgramDocument :: isPlagiarismSuspect(NgramDocument &other) {
+  
+  return false;
 }
 
 /* Prints the possible matches detected. */
 std::set<std::tuple<std::string, std::string>> PlagiarismDetector :: getPossibleMatches() {
-  return matches;
+
+  if (matches.empty()) {
+    std::cerr << "You must first run .detect() on a PlagiarismDetector before seeing matching results.\n";
+  }
+
+  std::set<std::tuple<std::string, std::string>> matchesStringTuples;
+
+  for (auto match : matches) {
+    std::string first = documents[std::get<0>(match)].name;
+    std::string second = documents[std::get<1>(match)].name;
+    matchesStringTuples.insert(std::make_tuple(first, second));
+  }
+
+  return matchesStringTuples;
+
 }
 
 /* Overloads << for a set of string tuples. */
 std::ostream& operator<<(std::ostream& out, const std::set<std::tuple<std::string, std::string>>& strTuples) {
-
+  for (auto tup : strTuples) {
+    out << std::get<0>(tup) << ", " << std::get<1>(tup) << "\n";
+  }
   return out;
 }
 
