@@ -1,38 +1,69 @@
 #ifndef CS120_PLAGIARISM_DETECTOR_HPP
 #define CS120_PLAGIARISM_DETECTOR_HPP
-#include <vector>
+
 #include <string>
-#include <cassert>
-#include "NgramCollection.hpp"
+#include <vector>
+#include <tuple>
+#include <set>
 #include "LanguageModel.hpp"
 
+
 enum Sensitivity { low, medium, high, invalid };
+
+
+class NgramDocument {
+
+public:
+
+  /* Constructor: need to specify n. */
+  NgramDocument(int n) : ngrams(n) { assert(n > 1); }
+
+  /* The name of the file. */
+  std::string name;
+
+  /* The ngrams model of the file. */
+  NgramCollection ngrams;
+
+};
+
 
 class PlagiarismDetector {
 
 public:
 
-  // constructor; need to specify sensitivity
+  /* Constructor; need to specify sensitivity. */
   PlagiarismDetector(Sensitivity s) : sen(s)  { }
 
-  // takes name of a file that contains paths to the documents
-  void readFileList(std::string fname);
+  /* Takes name of a file that contains paths to the documents. */
+  void readFileList(std::string &fname);
 
-  // detects any documents listed in the file list that may be plagiarized, to the initialized sensitivity
+  /* Detects any documents listed in the file list that may be plagiarized, to the initialized sensitivity. */
   void detect();
 
-  // prints the possible matches detected
-  void printPossibleMatches();
+  /* Returns a set of tuples with the possible detected matches. */
+  std::set<std::tuple<std::string, std::string>> getPossibleMatches();
 
 private:
 
-  // the sensitivity to which the detector is calibrated
+  /* The sensitivity to which the detector is calibrated. */
   Sensitivity sen;
 
-  // holds the language model of each file
-  std::vector<LanguageModel> models;
+  /* Read a list of paths from a file. */
+  std::vector<std::string> readNames(std::string &listFile);
+
+  /* Add ngrams to the model from a vector of words. */
+  void buildNgrams(const std::vector<std::string> &text);
+
+  /* Holds the ngram collection of each file. */
+  std::vector<NgramDocument> models;
+
+  /* The set of possible matches. */
+  std::set<std::tuple<std::string, std::string>> matches;
 
 };
+
+/* Overloads << for a set of string tuples. */
+std::ostream& operator<<(std::ostream& out, const std::set<std::tuple<std::string, std::string>>& strTuples);
 
 #endif
 

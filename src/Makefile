@@ -29,19 +29,19 @@ $(shell mkdir -p $(BIN_DIR))
 # targets 
 ###############################
 
-all: $(BIN_DIR)/a8 $(BIN_DIR)/unitTest
+all: $(BIN_DIR)/check_plagiarism $(BIN_DIR)/unitTest
 
 test: $(BIN_DIR)/unitTest
 	$(BIN_DIR)/unitTest
 
-$(BIN_DIR)/a8: $(OBJ_DIR)/a8.o $(OBJ_DIR)/NgramCollection.o $(OBJ_DIR)/LanguageModel.o 
-	$(GCC) $(CPPFLAGS) $(OBJ_DIR)/a8.o $(OBJ_DIR)/NgramCollection.o $(OBJ_DIR)/LanguageModel.o -o $(BIN_DIR)/a8
+$(BIN_DIR)/check_plagiarism: $(OBJ_DIR)/check_plagiarism.o $(OBJ_DIR)/NgramCollection.o $(OBJ_DIR)/LanguageModel.o $(OBJ_DIR)/PlagiarismDetector.o
+	$(GCC) $(CPPFLAGS) $(OBJ_DIR)/check_plagiarism.o $(OBJ_DIR)/NgramCollection.o $(OBJ_DIR)/LanguageModel.o $(OBJ_DIR)/PlagiarismDetector.o -o $(BIN_DIR)/check_plagiarism
 
 $(BIN_DIR)/unitTest: $(OBJ_DIR)/unitTests-NgramCollection.o $(OBJ_DIR)/unitTestDriver.o $(OBJ_DIR)/NgramCollection.o
 	$(GCC) $(CPPFLAGS) $(OBJ_DIR)/unitTestDriver.o $(OBJ_DIR)/unitTests-NgramCollection.o $(OBJ_DIR)/NgramCollection.o -o $(BIN_DIR)/unitTest
 
-$(OBJ_DIR)/a8.o: a8.cpp 
-	$(GCC) $(CPPFLAGS) -c a8.cpp -o $(OBJ_DIR)/a8.o
+$(OBJ_DIR)/check_plagiarism.o: check_plagiarism.cpp $(INC_DIR)/PlagiarismDetector.hpp
+	$(GCC) $(CPPFLAGS) -c check_plagiarism.cpp -o $(OBJ_DIR)/check_plagiarism.o
 
 $(OBJ_DIR)/unitTestDriver.o: unitTestDriver.cpp 
 	$(GCC) $(CPPFLAGS) -c unitTestDriver.cpp -o $(OBJ_DIR)/unitTestDriver.o
@@ -50,10 +50,13 @@ $(OBJ_DIR)/unitTests-NgramCollection.o: unitTests-NgramCollection.cpp
 	$(GCC) $(CPPFLAGS) -c unitTests-NgramCollection.cpp -o $(OBJ_DIR)/unitTests-NgramCollection.o
 
 $(OBJ_DIR)/NgramCollection.o: NgramCollection.cpp $(INC_DIR)/NgramCollection.hpp 
-	 $(GCC) $(CPPFLAGS) -c NgramCollection.cpp -o $(OBJ_DIR)/NgramCollection.o
+	$(GCC) $(CPPFLAGS) -c NgramCollection.cpp -o $(OBJ_DIR)/NgramCollection.o
 
 $(OBJ_DIR)/LanguageModel.o: LanguageModel.cpp $(INC_DIR)/LanguageModel.hpp $(INC_DIR)/NgramCollection.hpp
-	 $(GCC) $(CPPFLAGS) -c LanguageModel.cpp -o $(OBJ_DIR)/LanguageModel.o
+	$(GCC) $(CPPFLAGS) -c LanguageModel.cpp -o $(OBJ_DIR)/LanguageModel.o
+
+$(OBJ_DIR)/PlagiarismDetector.o: PlagiarismDetector.cpp $(INC_DIR)/PlagiarismDetector.hpp $(INC_DIR)/LanguageModel.hpp $(INC_DIR)/NgramCollection.hpp
+	$(GCC) $(CPPFLAGS) -c PlagiarismDetector.cpp -o $(OBJ_DIR)/PlagiarismDetector.o
 
 
 ###############################

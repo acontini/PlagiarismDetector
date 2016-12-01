@@ -1,9 +1,8 @@
 #include <iostream>
-#include <sstream>
 #include <string>
+#include <tuple>
+#include <set>
 #include "PlagiarismDetector.hpp"
-
-enum Sensitivity { low, medium, high, invalid };
 
 Sensitivity charToSensitivity(std::string arg) {
   if (arg == "l") {
@@ -42,10 +41,10 @@ int main(int argc, char** argv) {
     return 1;
   }
 
-  PlagiarismDetector detector();
+  PlagiarismDetector detector(s);
   detector.readFileList(inputName);
-  detector.detectWithSensitivity(s);
-  detector.printPossibleMatches();
+  detector.detect();
+  std::cout << detector.getPossibleMatches();
 
   return 0;
 
