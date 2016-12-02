@@ -47,8 +47,8 @@ public:
   // The total number of ngrams in the collection.
   unsigned int total = 0;
 
-  // Return the number of common ngrams between two NgramCollections.
-  friend bool intersectionCount(NgramCollection &c1, NgramCollection &c2);
+  // Return the number of common ngrams between this and a sentence's ngrams, over the total ngrams in the sentence.
+  double intersectionRatioWithSentence(NgramCollection &sent);
 
   //Retrieve the string representation of this NgramCollection (one entry per line) in specified order
   std::string toString(char order ='a') const; // will call one of the below (defaults to alpha if no argument)
