@@ -53,8 +53,11 @@ class PlagiarismDetector {
 
 public:
 
+  /* Threshold to determine if a ngram containment measure is suspect of plagiarism. */
+  static float containmentThreshold;
+
   /* Constructor; need to specify sensitivity. */
-  PlagiarismDetector(Sensitivity s) : n((unsigned int)s)  { }
+  PlagiarismDetector(Sensitivity s) : n((unsigned int)s)  { PlagiarismDetector::containmentThreshold = 0.4; }
 
   /* Takes name of a file that contains paths to the documents. */
   void readFileList(std::string &fname);

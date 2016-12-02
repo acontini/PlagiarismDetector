@@ -115,14 +115,21 @@ void PlagiarismDetector :: detect() {
 
 /* Check if another NgramDocument is suspect of plagiarizing the current NgramDocument. */
 bool NgramDocument :: isPlagiarismSuspect(NgramDocument &other) { 
-  return intersectionCount(ngrams, other.ngrams) > 0.4 * ngrams.total;
+  
+  for (auto sentence : sentenceNgrams()) {
+    if (intersectionCount(sentence, other.ngrams) / sentence.size() > PlagiarismDetector::containmentThreshold) {
+      return true;
+    }
+  }
+  return false;
+  
 }
 
 /* Prints the possible matches detected. */
 std::set<std::tuple<std::string, std::string>> PlagiarismDetector :: getPossibleMatches() {
 
   if (matches.empty()) {
-    std::cerr << "You must first run .detect() on a PlagiarismDetector before seeing matching results.\n";
+    std::cerr << "You must first run detect() on a PlagiarismDetector before seeing matching results.\n";
   }
 
   std::set<std::tuple<std::string, std::string>> matchesStringTuples;
