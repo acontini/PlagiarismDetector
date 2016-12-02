@@ -48,18 +48,6 @@ public:
   /* Return a vector of ngram collections representing each sentence. */
   std::vector<NgramCollection> sentenceNgrams();
 
-  /* Character set to delimit sentences. */
-  const std::set<char> getPunctSet() {
-    static std::set<char> punctSet = {'!','?','.'};
-    return punctSet;
-  }
-
-  /* Character set of possible post-sentence delimiters. */
-  const std::set<char> getQuoteSet() {
-    static std::set<char> quoteSet = {'\"', '\''};
-    return quoteSet;
-  }
-
 };
 
 
@@ -68,11 +56,8 @@ class PlagiarismDetector {
 
 public:
 
-  /* Threshold to determine if a ngram containment measure is suspect of plagiarism. */
-  static float containmentThreshold;
-
   /* Constructor; need to specify sensitivity. */
-  PlagiarismDetector(Sensitivity s) : n((unsigned int)s)  { PlagiarismDetector::containmentThreshold = 0.4; }
+  PlagiarismDetector(Sensitivity s) : n((unsigned int)s)  { }
 
   /* Takes name of a file that contains paths to the documents. */
   void readFileList(std::string &fname);
