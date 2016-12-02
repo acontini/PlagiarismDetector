@@ -45,6 +45,11 @@ public:
   /* Check if another NgramDocument is suspect of plagiarizing the current NgramDocument. */
   bool isPlagiarismSuspect(NgramDocument &other);
 
+
+  std::vector<NgramCollection> sentenceNgrams();
+
+  static std::set<char> punct {'!','?','.'};
+  static std::set<char> quote {'\"', '\''};
 };
 
 
@@ -79,7 +84,7 @@ private:
 
   /* Add ngrams to the model from a vector of words. */
   void buildNgramDoc(const std::string &fname, const std::vector<std::string> &text);
-
+  
   /* Holds the ngram collection of each file. */
   std::vector<NgramDocument> documents;
 
