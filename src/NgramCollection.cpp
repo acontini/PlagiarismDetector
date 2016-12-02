@@ -34,8 +34,26 @@ void NgramCollection :: increment(std::vector<std::string>::const_iterator begin
 }
 
 // Return the number of common ngrams between two NgramCollections.
-bool intersectionCount(NgramCollection &c1, NgramCollection &c2) {
-  return false;
+double NgramCollection::intersectionRatio(NgramCollection &c1) {
+  int i = 0;
+  for (auto iter = c1.begin(); iter != c1.end(); ++iter) {
+    auto key = this->counts.find(iter->first);
+    if(key != this->counts.end()) {
+      for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); ++iter2) {
+	auto key2 = key->second.find(iter2->first);
+	if( key2 != key->second.end()) {
+	  i += iter2->second < key2->second ? iter2->second : key2->second;
+	}
+      }
+    }
+  }
+  int sum = 0;
+  for (auto iter : c1) {
+    for(auto iter2 : iter->second) {
+      sum += iter2->second;
+    }
+  }
+  return i/sum;  
 }
 
 /* toString method; calls one of three versions depending on the
