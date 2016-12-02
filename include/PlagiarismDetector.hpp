@@ -42,14 +42,24 @@ public:
   /* The ngrams model of the file. */
   NgramCollection ngrams;
 
-  /* Check if another NgramDocument is suspect of plagiarizing the current NgramDocument. */
+  /* Checks if another NgramDocument is suspect of plagiarizing the current NgramDocument. */
   bool isPlagiarismSuspect(NgramDocument &other);
 
-
+  /* Return a vector of ngram collections representing each sentence. */
   std::vector<NgramCollection> sentenceNgrams();
 
-  static std::set<char> punct {'!','?','.'};
-  static std::set<char> quote {'\"', '\''};
+  /* Character set to delimit sentences. */
+  const std::set<char> getPunctSet() {
+    static std::set<char> punctSet = {'!','?','.'};
+    return punctSet;
+  }
+
+  /* Character set of possible post-sentence delimiters. */
+  const std::set<char> getQuoteSet() {
+    static std::set<char> quoteSet = {'\"', '\''};
+    return quoteSet;
+  }
+
 };
 
 

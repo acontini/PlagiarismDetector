@@ -115,9 +115,10 @@ void PlagiarismDetector :: detect() {
 
 /* Check if another NgramDocument is suspect of plagiarizing the current NgramDocument. */
 bool NgramDocument :: isPlagiarismSuspect(NgramDocument &other) { 
-  
-  for (auto sentence : sentenceNgrams()) {
-    if (intersectionCount(sentence, other.ngrams) / sentence.size() > PlagiarismDetector::containmentThreshold) {
+ 
+  auto sNgrams = sentenceNgrams();
+  for (auto sentence : sNgrams) {
+    if (intersectionCount(sentence, other.ngrams) / sNgrams.size() > PlagiarismDetector::containmentThreshold) {
       return true;
     }
   }
@@ -183,5 +184,5 @@ std::vector<NgramCollection> NgramDocument::sentenceNgrams() {
   }
   fin.close(); // close the file
 
-
+}
 
