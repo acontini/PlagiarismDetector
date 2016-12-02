@@ -53,6 +53,7 @@ int main(int argc, char** argv) {
   }
 
   if (s == invalid) {
+    //error
     return 1;
   }
 
