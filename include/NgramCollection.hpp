@@ -39,9 +39,11 @@ public:
   void increment(std::vector<std::string>::const_iterator begin,
 		 std::vector<std::string>::const_iterator end);
 
+  double intersectionRatio(NgramCollection &c1);
+  
   //Retrieve the value for N
   unsigned getN() const { return n; }
-
+  
   // The total number of ngrams in the collection.
   unsigned int total = 0;
 

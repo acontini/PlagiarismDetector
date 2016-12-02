@@ -118,7 +118,7 @@ bool NgramDocument :: isPlagiarismSuspect(NgramDocument &other) {
  
   auto sNgrams = sentenceNgrams();
   for (auto sentence : sNgrams) {
-    if (intersectionCount(sentence, other.ngrams) / sNgrams.size() > 0.4) {
+    if (other.ngrams.intersectionRatio(sentence) > 0.4) {
       return true;
     }
   }
