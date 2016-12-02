@@ -145,8 +145,8 @@ std::ostream& operator<<(std::ostream& out, const std::set<std::tuple<std::strin
   return out;
 }
 
-
-std::vector<NgramCollection> NgramDocument::sentenceNgrams() {
+/* Return the vector of sentence Ngrams for the file of the name fname. */
+std::vector<NgramCollection> NgramDocument::sentenceNgrams(std::string fname) {
   std::vector<NgramCollection> sentences;
 
   std::ifstream fin(fname);
@@ -158,23 +158,26 @@ std::vector<NgramCollection> NgramDocument::sentenceNgrams() {
   std::vector<std::string> text; // the document will be stored here
   while (fin >> word) {
     text.push_back(word);
-    if (punct.find(word.back()) != punct.end()
-	|| (quote.find(word.back()) != quote.end() && punct.find(*(word.end()-2)) != punct.end())) {
+    if (n <= text.size()
+	&&(punct.find(word.back()) != punct.end() 
+	||(quote.find(word.back()) != quote.end() && punct.find(*(word.end()-2)) != punct.end()))) {
       NgramCollection sentence(n);
       auto first = text.begin(); // first element
       auto last = text.begin() + n; // n-1th element
       int i = 0;
-      
-      while (i+n < text.size()) {
-	ngramDoc.ngrams.increment(first, last); // add ngrams until we run out
+
+      while (i+n <= text.size()) {
+	sentence.increment(first, last); // add ngrams until we run out
 	++first;
 	++last;
+	++i;
       }
-
+      sentences.push_back(sentence);
     }
-    text.clear;
+    text.clear();
   }
   fin.close(); // close the file
-
+  return sentences;  
+}
 
 
