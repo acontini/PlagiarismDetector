@@ -74,6 +74,9 @@ private:
   /* The n value corresponding to the sensitivity to which the detector is calibrated. */
   unsigned int n;
 
+  /* Whether detection has previously been ran on this object with the same files. */
+  bool detectionPerformed = false;
+
   /* Read a list of paths from a file. */
   std::vector<std::string> readNames(std::string &listFile);
 

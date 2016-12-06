@@ -23,6 +23,7 @@ mpan4@jhu.edu
 
 /* Takes name of a file that contains paths to the documents. */
 void PlagiarismDetector :: readFileList(std::string &fname) {
+  detectionPerformed = false;
   std::vector<std::string> nameList = readNames(fname);
   for (std::string &name : nameList) {
     addTextFromFile(name);
@@ -111,11 +112,11 @@ void PlagiarismDetector :: detect() {
 
     }
   }
+  detectionPerformed = true;
 }
 
 /* Check if another NgramDocument is suspect of plagiarizing the current NgramDocument. */
 bool NgramDocument :: isPlagiarismSuspect(NgramDocument &other) { 
-
   static const double containmentThreshold = 0.4;
  
   auto sNgrams = sentenceNgrams();
@@ -132,7 +133,8 @@ bool NgramDocument :: isPlagiarismSuspect(NgramDocument &other) {
 std::set<std::tuple<std::string, std::string>> PlagiarismDetector :: getPossibleMatches() {
 
   if (matches.empty()) {
-    std::cerr << "You must first run detect() on a PlagiarismDetector before seeing matching results.\n";
+    std::string msg = detectionPerformed ? "There are no matches.\n" : "You must run detect() after importing documents to check.\n";
+    std::cerr << msg;
   }
 
   std::set<std::tuple<std::string, std::string>> matchesStringTuples;
@@ -186,8 +188,8 @@ std::vector<NgramCollection> NgramDocument::sentenceNgrams() {
 	++i;
       }
       sentences.push_back(sentence);
+      text.clear();
     }
-    text.clear();
   }
   fin.close(); // close the file
 

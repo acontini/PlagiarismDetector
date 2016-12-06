@@ -242,3 +242,18 @@ TEST_CASE("pickWord with some options", "[pickWord]") {
   REQUIRE((can / (double) numTrials) == Approx(0.25).epsilon(0.03));
 
 }
+
+TEST_CASE("calculating the intersection ratio with a sentence", "[intersectionRatioWithSentence]") {
+
+  vector<string> doc;
+  vector<string> sentence;
+
+  
+
+  NgramCollection docGrams(3);
+  NgramCollection sentGrams(3);
+
+  
+
+}
+
