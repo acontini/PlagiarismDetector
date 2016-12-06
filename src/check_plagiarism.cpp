@@ -20,11 +20,11 @@ mpan4@jhu.edu
 #include "PlagiarismDetector.hpp"
 
 Sensitivity charToSensitivity(std::string arg) {
-  if (arg == "l") {
+  if (arg == "l" || arg == "L") {
     return low;
-  } else if (arg == "m") {
+  } else if (arg == "m" || arg == "M") {
     return medium;
-  } else if (arg == "h") {
+  } else if (arg == "h" || arg == "H") {
     return high;
   } else {
     return invalid;
