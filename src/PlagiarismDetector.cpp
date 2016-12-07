@@ -158,7 +158,7 @@ void PlagiarismDetector :: detect() {
 bool PlagiarismDetector :: NgramDocument :: isPlagiarismSuspect(NgramDocument &other) { 
   static const double containmentThreshold = 0.4;
  
-  for (auto sentence : sentenceNgrams) {
+  for (auto &sentence : sentenceNgrams) {
     if (other.ngrams.intersectionRatioWithSentence(sentence) > containmentThreshold) {
       return true;
     }
