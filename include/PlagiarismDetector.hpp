@@ -46,7 +46,7 @@ public:
   bool isPlagiarismSuspect(NgramDocument &other);
 
   /* Return a vector of ngram collections representing each sentence. */
-  std::vector<NgramCollection> sentenceNgrams();
+  std::vector<NgramCollection> sentenceNgrams;
 
 };
 
@@ -84,7 +84,7 @@ private:
   void addTextFromFile(std::string &fname);
 
   /* Add ngrams to the model from a vector of words. */
-  void buildNgramDoc(const std::string &fname, const std::vector<std::string> &text);
+  void buildNgramDoc(const std::string &fname, const std::vector<std::string> &text, const std::vector<NgramCollection> &sentences);
   
   /* Holds the ngram collection of each file. */
   std::vector<NgramDocument> documents;

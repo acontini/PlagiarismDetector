@@ -55,24 +55,53 @@ void PlagiarismDetector :: addTextFromFile(std::string &fname) {
     return;
   }
 
+  std::vector<NgramCollection> sentences;
+  static std::set<char> punctSet = {'!','?','.'};
+  static std::set<char> quoteSet = {'\"', '\''};
+
   std::string word;
   std::vector<std::string> text; // the document will be stored here
+  std::vector<std::string> sentenceText; // the current sentence will be stored here
+
   for (unsigned i=1; i<n; i++) {
     text.push_back("<START_" + std::to_string(i) + ">"); // add n-1 start tags
   }
+
   while (fin >> word) {
     text.push_back(word); // read words from the file and add them to the document 
+    sentenceText.push_back(word);
+    if (punctSet.find(word.back()) != punctSet.end()
+        ||(word.length() > 1 && quoteSet.find(word.back()) != quoteSet.end() && punctSet.find(*(word.end()-2)) != punctSet.end())) {
+      if (n > sentenceText.size()) {
+        sentenceText.clear();
+      } else {
+        NgramCollection sentence(n);
+        auto first = sentenceText.begin(); // first element
+        auto last = sentenceText.begin() + n; // n-1th element
+        int i = 0;
+
+        while (i+n <= sentenceText.size()) {
+          sentence.increment(first, last); // add ngrams until we run out
+          ++first;
+          ++last;
+          ++i;
+        }
+        sentences.push_back(sentence);
+        sentenceText.clear();
+      }
+    }
   }
+
   for (unsigned i=1; i<n; i++) {
     text.push_back("<END_" + std::to_string(i) + ">"); // add n-1 end tags
   }
   fin.close(); // close the file
 
-  buildNgramDoc(fname, text); // add ngrams from the document to the model
+  buildNgramDoc(fname, text, sentences); // add ngrams from the document to the model
 }
 
 /* Add ngrams to the model from a vector of words. */
-void PlagiarismDetector :: buildNgramDoc(const std::string &fname, const std::vector<std::string> &text) {
+void PlagiarismDetector :: buildNgramDoc(const std::string &fname, const std::vector<std::string> &text, const std::vector<NgramCollection> &sentences) {
 
   NgramDocument ngramDoc(fname, n);
 
@@ -85,6 +114,7 @@ void PlagiarismDetector :: buildNgramDoc(const std::string &fname, const std::ve
     ++last;
   }
 
+  ngramDoc.sentenceNgrams = sentences;
   documents.push_back(ngramDoc);
 }
 
@@ -119,8 +149,7 @@ void PlagiarismDetector :: detect() {
 bool NgramDocument :: isPlagiarismSuspect(NgramDocument &other) { 
   static const double containmentThreshold = 0.4;
  
-  auto sNgrams = sentenceNgrams();
-  for (auto sentence : sNgrams) {
+  for (auto sentence : sentenceNgrams) {
     if (other.ngrams.intersectionRatioWithSentence(sentence) > containmentThreshold) {
       return true;
     }
@@ -155,44 +184,5 @@ std::ostream& operator<<(std::ostream& out, const std::set<std::tuple<std::strin
     out << std::get<0>(tup) << ", " << std::get<1>(tup) << "\n";
   }
   return out;
-}
-
-/* Return the vector of sentence Ngrams for the file of the name fname. */
-std::vector<NgramCollection> NgramDocument::sentenceNgrams() {
-  std::vector<NgramCollection> sentences;
-  unsigned int n = ngrams.getN();
-  static std::set<char> punctSet = {'!','?','.'};
-  static std::set<char> quoteSet = {'\"', '\''};
-
-  std::ifstream fin(name);
-  if (!fin.is_open()) { // make sure it opened
-    std::cerr << "Error: could not open file '" << name << "', file will be skipped...\n";
-    return sentences;
-  }
-  std::string word;
-  std::vector<std::string> text; // the document will be stored here
-  while (fin >> word) {
-    text.push_back(word);
-    if (n <= text.size()
-	&&(punctSet.find(word.back()) != punctSet.end()
-	||(quoteSet.find(word.back()) != quoteSet.end() && punctSet.find(*(word.end()-2)) != punctSet.end()))) {
-      NgramCollection sentence(n);
-      auto first = text.begin(); // first element
-      auto last = text.begin() + n; // n-1th element
-      int i = 0;
-
-      while (i+n <= text.size()) {
-	sentence.increment(first, last); // add ngrams until we run out
-	++first;
-	++last;
-	++i;
-      }
-      sentences.push_back(sentence);
-      text.clear();
-    }
-  }
-  fin.close(); // close the file
-
-  return sentences;  
 }
 
