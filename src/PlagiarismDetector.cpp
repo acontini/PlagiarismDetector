@@ -189,8 +189,8 @@ std::ostream& operator<<(std::ostream& out, const std::set<std::tuple<std::strin
 
 std::string PlagiarismDetector :: toString() {
   std::string s{};
-  for (NgramDocument nd : documents) {
-    s += nd.ngrams.toString('a');
+  for (NgramDocument& nd : documents) {
+    s = s + nd.ngrams.toString('a');
   }
   return s;
 }
