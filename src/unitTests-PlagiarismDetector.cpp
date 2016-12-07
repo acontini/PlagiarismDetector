@@ -27,6 +27,7 @@ mpan4@jhu.edu
 #include <string>
 #include <vector>
 #include <list>
+#include <sstream>
 
 using std::string;
 using std::vector;
@@ -57,7 +58,7 @@ TEST_CASE("readNames document check","[readNames],[toString]") {
   std::string n = "../data/filenameList1.txt";
   PlagiarismDetector pd(s);
   pd.readFileList(n);
-  REQUIRE("<START_1> <START_2> I 1\n<START_2> I like 1\nI like apples 1\nand. <END_1> <END_2> 1\napples and. <END_1> 1\nlike apples and. 1\n<START_1> <START_2> I 1\n<START_2> I like 1\nI like apples 1\nand apples. <END_1> 1\napples and apples. 1\napples. <END_1> <END_2> 1\nlike apples and 1\n" == pd.toString());
+  REQUIRE("<START_1> <START_2> I 1\n<START_2> I like 1\nI like apples 1\nand <END_1> <END_2> 1\napples and <END_1> 1\nlike apples and 1\n<START_1> <START_2> I 1\n<START_2> I like 1\nI like apples 1\nand apples <END_1> 1\napples <END_1> <END_2> 1\napples and apples 1\nlike apples and 1\n" == pd.toString());
 }
 
 TEST_CASE("readNames sentence check", "[readNames], [sentenceToString]") {
@@ -65,5 +66,20 @@ TEST_CASE("readNames sentence check", "[readNames], [sentenceToString]") {
   std::string n = "../data/filenameList1.txt";
   PlagiarismDetector pd(s);
   pd.readFileList(n);
-  REQUIRE("../data/test1/file1.txt\nI like apples 1\nlike apples and. 1\n../data/test1/file2.txt\nI like apples 1\napples and apples. 1\nlike apples and 1\n"== pd.sentenceToString());
+  REQUIRE("../data/test1/file1.txt\nI like apples 1\nlike apples and 1\n../data/test1/file2.txt\nI like apples 1\napples and apples 1\nlike apples and 1\n"== pd.sentenceToString());
+}
+
+
+
+TEST_CASE("detect no plagiarism", "[detect]") {
+  std::stringstream ss;
+  Sensitivity s = medium;
+  std::string n = "../data/filenameList1.txt";
+  PlagiarismDetector pd(s);
+  pd.readFileList(n);
+  pd.detect();
+  ss << pd.getPossibleMatches();
+  std::string str;
+  ss >> str;
+  //  REQUIRE(str == "");
 }

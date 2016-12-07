@@ -69,10 +69,18 @@ void PlagiarismDetector :: addTextFromFile(std::string &fname) {
   }
 
   while (fin >> word) {
+    bool end = false;
+    if (punctSet.find(word.back()) != punctSet.end()) {
+      word = word.substr(0, word.size()-1);
+      end =true;  
+    } else if ((word.length() > 1 && quoteSet.find(word.back()) != quoteSet.end() && punctSet.find(*(word.end()-2)) != punctSet.end())) {
+      word = word.substr(0, word.size()-2);
+      end = true;
+    }
     text.push_back(word); // read words from the file and add them to the document 
     sentenceText.push_back(word);
-    if (punctSet.find(word.back()) != punctSet.end()
-        ||(word.length() > 1 && quoteSet.find(word.back()) != quoteSet.end() && punctSet.find(*(word.end()-2)) != punctSet.end())) {
+
+    if(end) {
       if (n > sentenceText.size()) {
         sentenceText.clear();
       } else {
