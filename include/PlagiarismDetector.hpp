@@ -28,28 +28,6 @@ mpan4@jhu.edu
 enum Sensitivity { low = 4, medium = 3, high = 2, invalid = 0 };
 
 
-/* Simple class to hold a filename and its ngram collection. */
-class NgramDocument {
-
-public:
-
-  /* Constructor: need to specify n. */
-  NgramDocument(std::string fname, int n) : name(fname), ngrams(n) { assert(n > 1); }
-
-  /* The name of the file. */
-  std::string name;
-
-  /* The ngrams model of the file. */
-  NgramCollection ngrams;
-
-  /* Checks if another NgramDocument is suspect of plagiarizing the current NgramDocument. */
-  bool isPlagiarismSuspect(NgramDocument &other);
-
-  /* Return a vector of ngram collections representing each sentence. */
-  std::vector<NgramCollection> sentenceNgrams;
-
-};
-
 
 /* Model that holds a collection of NgramDocuments and can perform plagiarism detection on them. */
 class PlagiarismDetector {
@@ -60,7 +38,7 @@ public:
   PlagiarismDetector(Sensitivity s) : n((unsigned int)s)  { }
 
   /* Takes name of a file that contains paths to the documents. */
-  void readFileList(std::string &fname);
+  std::vector<std::string> readFileList(std::string &fname);
 
   /* Detects any documents listed in the file list that may be plagiarized, to the initialized sensitivity.
    * Results stored in matches variable. */
@@ -69,8 +47,37 @@ public:
   /* Returns a set of tuples with the possible detected matches. */
   std::set<std::tuple<std::string, std::string>> getPossibleMatches();
 
+  /* toString to test purpose. */
+  std::string toString();
+
+  /* toString to test sentences. */
+  std::string sentenceToString();
+  
 private:
 
+  /* Simple class to hold a filename and its ngram collection. */
+  class NgramDocument {
+
+  public:
+
+    /* Constructor: need to specify n. */
+    NgramDocument(std::string fname, int n) : name(fname), ngrams(n) { assert(n > 1); }
+
+    /* Checks if another NgramDocument is suspect of plagiarizing the current NgramDocument. */
+    bool isPlagiarismSuspect(NgramDocument &other);
+
+    /* The name of the file. */
+    std::string name;
+
+    /* The ngrams model of the file. */
+    NgramCollection ngrams;
+
+    /* Return a vector of ngram collections representing each sentence. */
+    std::vector<NgramCollection> sentenceNgrams;
+
+  };
+
+  
   /* The n value corresponding to the sensitivity to which the detector is calibrated. */
   unsigned int n;
 
