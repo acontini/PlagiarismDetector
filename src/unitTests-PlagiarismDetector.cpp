@@ -21,8 +21,8 @@ mpan4@jhu.edu
  */
 
 #include "catch.hpp" // simple unit-testing framework
-#include "NgramCollection.hpp" // header declaring the functions we want to test
-
+//#include "../include/PlagiarismDetector.hpp" // header declaring the functions we want to test
+#include "PlagiarismDetector.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -33,5 +33,18 @@ using std::vector;
 using std::list;
 
 
-
-
+TEST_CASE("readNames","[readNames]") {
+  Sensitivity s = medium;
+  std::string n = "../data/filenameList1.txt";
+  PlagiarismDetector pd(s);
+  std::vector<std::string> nv = pd.readFileList(n);
+  REQUIRE(nv.at(0) == "test1/file1.txt");
+  REQUIRE(nv.at(1) == "test1/file2.txt");
+}
+TEST_CASE("readNames document check","[readNames],[toString]") {
+  Sensitivity s = medium;
+  std::string n = "../data/filenameList1.txt";
+  PlagiarismDetector pd(s);
+  pd.readFileList(n);
+  REQUIRE("I like apples 1\nlike apples and 1\napples and apples 1\nI like apples 1\nlike apples and 1\n" == pd.toString());
+}
