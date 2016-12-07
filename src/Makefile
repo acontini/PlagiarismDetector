@@ -17,7 +17,7 @@
 # Compiler commands
 ###############################
 GCC = g++
-CPPFLAGS = -std=c++11 -pedantic -Wall -Wextra -g -I../include
+CPPFLAGS = -std=c++11 -pedantic -Wall -Wextra -g -O3 -I../include
 
 ###############################
 # pa.hpp variables
@@ -45,17 +45,20 @@ test: $(BIN_DIR)/unitTest
 $(BIN_DIR)/check_plagiarism: $(OBJ_DIR)/check_plagiarism.o $(OBJ_DIR)/NgramCollection.o $(OBJ_DIR)/PlagiarismDetector.o
 	$(GCC) $(CPPFLAGS) $(OBJ_DIR)/check_plagiarism.o $(OBJ_DIR)/NgramCollection.o $(OBJ_DIR)/PlagiarismDetector.o -o $(BIN_DIR)/check_plagiarism
 
-$(BIN_DIR)/unitTest: $(OBJ_DIR)/unitTests-NgramCollection.o $(OBJ_DIR)/unitTestDriver.o $(OBJ_DIR)/NgramCollection.o
-	$(GCC) $(CPPFLAGS) $(OBJ_DIR)/unitTestDriver.o $(OBJ_DIR)/unitTests-NgramCollection.o $(OBJ_DIR)/NgramCollection.o -o $(BIN_DIR)/unitTest
+$(BIN_DIR)/unitTest: $(OBJ_DIR)/unitTests-NgramCollection.o $(OBJ_DIR)/unitTests-PlagiarismDetector.o $(OBJ_DIR)/unitTestDriver.o $(OBJ_DIR)/PlagiarismDetector.o $(OBJ_DIR)/NgramCollection.o
+	$(GCC) $(CPPFLAGS) $(OBJ_DIR)/unitTestDriver.o $(OBJ_DIR)/unitTests-NgramCollection.o $(OBJ_DIR)/unitTests-PlagiarismDetector.o $(OBJ_DIR)/PlagiarismDetector.o $(OBJ_DIR)/NgramCollection.o -o $(BIN_DIR)/unitTest
 
 $(OBJ_DIR)/check_plagiarism.o: check_plagiarism.cpp $(INC_DIR)/PlagiarismDetector.hpp
 	$(GCC) $(CPPFLAGS) -c check_plagiarism.cpp -o $(OBJ_DIR)/check_plagiarism.o
 
-$(OBJ_DIR)/unitTestDriver.o: unitTestDriver.cpp 
+$(OBJ_DIR)/unitTestDriver.o: unitTestDriver.cpp
 	$(GCC) $(CPPFLAGS) -c unitTestDriver.cpp -o $(OBJ_DIR)/unitTestDriver.o
 
 $(OBJ_DIR)/unitTests-NgramCollection.o: unitTests-NgramCollection.cpp 
 	$(GCC) $(CPPFLAGS) -c unitTests-NgramCollection.cpp -o $(OBJ_DIR)/unitTests-NgramCollection.o
+
+$(OBJ_DIR)/unitTests-PlagiarismDetector.o: unitTests-PlagiarismDetector.cpp
+	$(GCC) $(CPPFLAGS) -c unitTests-PlagiarismDetector.cpp -o $(OBJ_DIR)/unitTests-PlagiarismDetector.o
 
 $(OBJ_DIR)/NgramCollection.o: NgramCollection.cpp $(INC_DIR)/NgramCollection.hpp 
 	$(GCC) $(CPPFLAGS) -c NgramCollection.cpp -o $(OBJ_DIR)/NgramCollection.o
