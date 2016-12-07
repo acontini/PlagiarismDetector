@@ -49,7 +49,6 @@ double NgramCollection::intersectionRatioWithSentence(NgramCollection &sent) {
          // Add to counter the lower of the ngram frequencies
          i += sentenceNthWord.second < matchingDocNthWord->second ? sentenceNthWord.second : matchingDocNthWord->second;
        }
-
      }
    }
  }

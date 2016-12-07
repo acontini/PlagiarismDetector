@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
   }
 
   if (s == invalid) {
-    //error
+    std::cerr << "Invalid sensitivity.\n";
     return 1;
   }
 

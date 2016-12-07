@@ -194,3 +194,14 @@ std::string PlagiarismDetector :: toString() {
   }
   return s;
 }
+
+std::string PlagiarismDetector :: sentenceToString() {
+  std::string s{};
+  for (NgramDocument& nd : documents) {
+    s += nd.name + "\n";
+    for (NgramCollection& nc : nd.sentenceNgrams) {
+      s += nc.toString('a');
+    }
+  }
+  return s;
+}
