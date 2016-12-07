@@ -1,7 +1,7 @@
 /*
 600.120.01 CS120 Intermediate Programming
 Final Project - Plagiarism Detector
-unitTests-PlagiarismDetector.cpp - unit tests for the PlagiarismDetector class
+unitTests-PlagiarismDetector.cpp - unit tests for the PlagiarismDetector and NgramDocument classes
 12/6/2016
 
 Ryan Demo
