@@ -21,7 +21,6 @@ mpan4@jhu.edu
  */
 
 #include "catch.hpp" // simple unit-testing framework
-//#include "../include/PlagiarismDetector.hpp" // header declaring the functions we want to test
 #include "PlagiarismDetector.hpp"
 #include <iostream>
 #include <string>
@@ -69,8 +68,6 @@ TEST_CASE("readNames sentence check", "[readNames], [sentenceToString]") {
   REQUIRE("../data/test1/file1.txt\nI like apples 1\nlike apples and 1\n../data/test1/file2.txt\nI like apples 1\napples and apples 1\nlike apples and 1\n"== pd.sentenceToString());
 }
 
-
-
 TEST_CASE("detect no plagiarism", "[detect]") {
   std::stringstream ss;
   Sensitivity s = medium;
@@ -79,7 +76,8 @@ TEST_CASE("detect no plagiarism", "[detect]") {
   pd.readFileList(n);
   pd.detect();
   ss << pd.getPossibleMatches();
-  std::string str;
-  ss >> str;
-  //  REQUIRE(str == "");
+  char ca[256];
+  ss.getline(ca, 256);
+  std::string str(ca);
+  REQUIRE(str == "../data/test1/file1.txt, ../data/test1/file2.txt");
 }

@@ -245,15 +245,18 @@ TEST_CASE("pickWord with some options", "[pickWord]") {
 
 TEST_CASE("calculating the intersection ratio with a sentence", "[intersectionRatioWithSentence]") {
 
-  vector<string> doc;
-  vector<string> sentence;
-
-  
-
+  vector<string> doc = {"red", "blue", "green", "yellow", "purple", "bright"};
+  vector<string> sentence = {"red", "blue", "green", "yellow", "purple", "dark", "turtle"};
   NgramCollection docGrams(3);
   NgramCollection sentGrams(3);
 
-  
+  for (int i = 0; i < 4; ++i) {
+    docGrams.increment(doc.begin() + i, doc.begin() + 3 + i);
+    sentGrams.increment(sentence.begin() + i, sentence.begin() + 3 + i);
+  }
+  sentGrams.increment(sentence.begin() + 4, sentence.end());
+  REQUIRE(3/4 == docGrams.intersectionRatioWithSentence(sentGrams));
+  REQUIRE(3/5 == sentGrams.intersectionRatioWithSentence(docGrams));
 
 }
 
