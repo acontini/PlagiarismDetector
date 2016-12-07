@@ -68,7 +68,7 @@ TEST_CASE("readNames sentence check", "[readNames], [sentenceToString]") {
   REQUIRE("../data/test1/file1.txt\nI like apples 1\nlike apples and 1\n../data/test1/file2.txt\nI like apples 1\napples and apples 1\nlike apples and 1\n"== pd.sentenceToString());
 }
 
-TEST_CASE("detect no plagiarism", "[detect]") {
+TEST_CASE("detect no plagiarism", "[detect],[getPossibleMatcher],[operator<<]") {
   std::stringstream ss;
   Sensitivity s = medium;
   std::string n = "../data/filenameList1.txt";

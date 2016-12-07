@@ -37,12 +37,12 @@ void NgramCollection :: increment(std::vector<std::string>::const_iterator begin
 double NgramCollection::intersectionRatioWithSentence(NgramCollection &sent) {
   int i = 0;
 
-  for (auto sentenceNgram : sent.counts) {  // Look at each ngram in the sentence
+  for (auto& sentenceNgram : sent.counts) {  // Look at each ngram in the sentence
 
     auto matchingDocNgram = this->counts.find(sentenceNgram.first);  // Look for matching n-1 words key
     if (matchingDocNgram != this->counts.end()) {  // If matchingDocNgram exists in sent's ngrams
 
-      for (auto sentenceNthWord : sentenceNgram.second) {  // Iterate over sent's value (a map)
+      for (auto& sentenceNthWord : sentenceNgram.second) {  // Iterate over sent's value (a map)
 
        auto matchingDocNthWord = matchingDocNgram->second.find(sentenceNthWord.first);  // Look for matching nth word in doc's matched (n-1)gram
        if (matchingDocNthWord != matchingDocNgram->second.end()) {  // If the nth word exists in the matched (n-1)gram map
@@ -54,8 +54,8 @@ double NgramCollection::intersectionRatioWithSentence(NgramCollection &sent) {
  }
 
   int sum = 0;
-  for (auto iter : sent.counts) {
-    for (auto iter2 : iter.second) {
+  for (auto& iter : sent.counts) {
+    for (auto& iter2 : iter.second) {
       sum += iter2.second;
     }
   }
