@@ -17,7 +17,7 @@
 # Compiler commands
 ###############################
 GCC = g++
-CPPFLAGS = -std=c++11 -pedantic -Wall -Wextra -g -O3 -I../include
+CPPFLAGS = -std=c++11 -pedantic -Wall -Wextra -O3 -I../include
 
 ###############################
 # pa.hpp variables
