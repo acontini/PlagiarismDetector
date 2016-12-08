@@ -49,17 +49,18 @@ double NgramCollection::intersectionRatioWithSentence(NgramCollection &sent) {
          // Add to counter the lower of the ngram frequencies
          i += sentenceNthWord.second < matchingDocNthWord->second ? sentenceNthWord.second : matchingDocNthWord->second;
        }
-     }
-   }
- }
+      }
+    }
+  }
 
+  // Calculate the number of ngrams in the sentence
   int sum = 0;
   for (auto& iter : sent.counts) {
     for (auto& iter2 : iter.second) {
       sum += iter2.second;
     }
   }
-  return i/sum;  
+  return i/sum;  // Return this ratio
 }
 
 /* toString method; calls one of three versions depending on the
