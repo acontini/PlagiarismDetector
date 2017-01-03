@@ -10,6 +10,7 @@ Mengying Pan
 mpan4@jhu.edu
 
 Score: 200/200
+
 TA Feedback: "Code has great style and it is obvious that a lot of effort was put into the design of the class layout as well as the detection algorithm. Efficiency was also considered a lot more than in any other project which is obvious from the runtime. No flaws!"
 
 --------------------------------------------------------------------------------------------
