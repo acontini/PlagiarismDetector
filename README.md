@@ -1,6 +1,8 @@
 # Ngram-Based Plagiarism Detector
 600.120.01 | CS120 | Intermediate Programming
-Final Project - Plagiarism Detector
+
+C++ Final Project - Plagiarism Detector
+
 12/7/2016
 
 Ryan Demo
@@ -87,11 +89,11 @@ We do not need to change our intersection ratio threshold as described in the De
 --------------------------------------------------------------------------------------------
 ### Timing
 Anticipated times on JHU document sets:
-Small document set 		~ 0.6 seconds
-Medium document set 	~ 3.6 seconds
-Big document set 		~ 17 minutes
-Large document set 		~ 201 minutes (projected)
-Huge document set 		~ 278 minutes (projected)
+- Small document set 		~ 0.6 seconds
+- Medium document set 	~ 3.6 seconds
+- Big document set 		~ 17 minutes
+- Large document set 		~ 201 minutes (projected)
+- Huge document set 		~ 278 minutes (projected)
 
 We were able to bring our times down by an order of magnitude by using the compiler flag `-O3` and eliminating all instances of pass by value in `for` loops.
 
